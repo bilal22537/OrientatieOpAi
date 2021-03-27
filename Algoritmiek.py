@@ -2,14 +2,6 @@
 # -*- coding: utf-8 -*-
 
 """
-Oriëntatie op AI
-
-Practicum 2: algoritmiek
-
-(c) 2019 Hogeschool Utrecht
-Tijmen Muller (tijmen.muller@hu.nl)
-
-
 Opdracht:
 Beantwoord onderstaande vragen en werk onderstaande functies uit.
 Voeg commentaar toe om je code toe te lichten.

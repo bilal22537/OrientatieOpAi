@@ -2,13 +2,6 @@
 # -*- coding: utf-8 -*-
 
 """
-Oriëntatie op AI
-
-Practicum 4: herkansing
-
-(c) 2019 Hogeschool Utrecht
-Tijmen Muller (tijmen.muller@hu.nl)
-
 
 Opdracht:
 Beantwoord onderstaande vragen en werk onderstaande functies uit.
