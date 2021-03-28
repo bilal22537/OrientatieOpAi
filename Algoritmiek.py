@@ -1,3 +1,4 @@
+ 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -5,40 +6,44 @@
 Opdracht:
 Beantwoord onderstaande vragen en werk onderstaande functies uit.
 Voeg commentaar toe om je code toe te lichten.
-
 Je kunt je functies testen met het gegeven raamwerk door het bestand
 uit te voeren (of met behulp van pytest, als je weet hoe dat werkt).
 Lever je werk in op Canvas als alle tests slagen.
-
 Let op! Het is niet toegestaan om bestaande modules te importeren en te
         gebruiken, zoals `math` en `statistics`.
 """
 
 # Vul hier je naam, klas en studentnummer in
-naam = ""
-klas = ""
-studentnummer = -1
+naam = "Achraf"
+klas = "A"
+studentnummer = 0
 
 """
 1.  Sorteeralgoritme
-
     Hieronder staat de pseudocode van een sorteeralgoritme:
     1. Startend vanaf het begin van een lijst, vergelijk elk element met zijn volgende buur.
     2. Als het element groter is dan zijn volgende buur, verwissel ze van plaats.
     3. Doorloop zo de lijst tot het eind.
     4. Als er verwisselingen zijn geweest bij stap 2., ga naar stap 1.
-
     1a. Handmatig toepassen
         Gegeven is de lijst l = [ 4, 3, 1, 2 ]. Geef de waardes die deze
         lijst aanneemt bij álle tussenstappen bij toepassing van
         bovenstaand sorteeralgoritme.
 
-        [geef hier je antwoord]
+        [4, 3, 1, 2]
+        [3, 4, 1, 2]
+        [3, 1, 4, 2]
+        [3, 1, 2, 4]
+        [1, 3, 2, 4]
+        [1, 2, 3, 4]
+        [1, 2, 3, 4]
+        [1, 2, 3, 4]
+        [1, 2, 3, 4]
+        
 
     1b. Implementatie
         Implementeer het sorteeralgoritme in Python in een functie
         hieronder genaamd my_sort(lst).
-
     1c. Best en worst case
         -   Stel je hebt een lijst met de waarden 1, 2 en 3. Bij welke
             volgorde van de waarden in de lijst is het sorteeralgoritme
@@ -46,88 +51,79 @@ studentnummer = -1
             Hoeveel vergelijkingen (zoals beschreven in stap 1. van de
             pseudocode) zijn nodig geweest?
 
-            [geef hier je antwoord]
-
+            Het best case scenario is bij de input [1,2,3], er gebeuren slechts 2 vergelijkingen
 
         -   Bij welke volgorde van de waarden in de lijst is het
             sorteeralgoritme het minst snel klaar (worst-case scenario)?
             Hoeveel vergelijkingen zijn nodig geweest?
 
-            [geef hier je antwoord]
-
+            Het worst case scenario is bij de input [3,2,1], er gebeuren 6 vergelijkingen
 
         -   Stel je hebt een lijst met de waarden 1 tot en met 4.
-            Wat is nu het best-case scenario?
+            Wat is nu het best-case scenario? 
             Hoeveel vergelijkingen zijn er nodig?
             En wat is nu het worst-case scenario?
             Hoeveel vergelijkingen zijn er nodig?
 
-            [geef hier je antwoord]
-
-
+            Best case scenario  [1,2,3,4], er gebeuren 3 vergelijkingen
+            Worst case scenario [4,3,2,1], er gebeuren 12 vergelijkingen
+            
         -   Stel je hebt een lijst met de waarden 1 tot en met n
             (je weet nu dus niet precies hoeveel waarden er in de lijst
             zitten, het zijn er 'n').
-            Wat is nu het best-case scenario?
+            Wat is nu het best-case scenario?           
             Hoeveel vergelijkingen zijn er nodig?
-            En wat is nu het worst-case scenario?
+            En wat is nu het worst-case scenario?            
             Hoeveel vergelijkingen zijn er nodig?
 
-            [geef hier je antwoord]
+            In het best-case scenario is de lijst reeds gesorteerd het aantal vergelijkinge is n-1 
+            In het worst-case scenario is de lijst reversed, het aantal vergelijkingen is dan n*(n-1)
 """
 
+def linear_search_recursive(lst, target):
+    #als de lijst leeg is zit het element er zeker niet in 
+    if(len(lst) == 0):
+        return False
+    else: 
+        return lst[0] == target or linear_search_recursive(lst[1:len(lst)],target)
+        #oftewel is het eerste element van de lijst het target, zoniet zoek het in de rest van de lijst
+        
+
+#neemt een lijst en verwisselt het i en j-de element
+def swap(lst,i,j):
+    lst[i],lst[j] = lst[j], lst[i]
+    return lst
+    
+#voert stappen 1,2 en 3 uit. Als er verwisselingen voorkomen geeft het true terug, anders false
+def swap_to_end(lst):
+    swaps_performed = False 
+    for i in range(len(lst)-1):
+        if(lst[i]> lst[i+1]):
+            swap(lst,i,i+1)
+            swaps_performed = True
+    return swaps_performed
 
 def my_sort(lst):
-    """
-    Sorteer gegeven lijst lst volgens het algoritme zoals beschreven in de pseudocode:
-
-    1. Startend vanaf het begin van een lijst, vergelijk elk element met zijn volgende buur.
-    2. Als het element groter is dan zijn volgende buur, verwissel ze van plaats.
-    3. Doorloop zo de lijst tot het eind.
-    4. Als er verwisselingen zijn geweest bij stap 2., ga naar stap 1.
-
-    Zorg dat de gegeven lijst niet verandert, maar geef een nieuwe, gesorteerde variant van de lijst terug.
-    """
-    lst_sorted = None
-    return lst_sorted
-
-
-def linear_search_recursive(lst, target):
-    """
-    Zoek een element target in gegeven lijst lst door middel van recursief lineair zoeken.
-    De inhoud van de gegeven lijst verandert niet.
-
-    Args:
-        lst    -- de lijst waarin gezocht wordt (list)
-        target -- het element dat gezocht wordt
-
-    Returns:
-        of het element in de lijst voorkomt (bool)
-    """
-    return False
+    lst_copy = lst.copy()    
+    while(swap_to_end(lst_copy)):
+        pass
+    return lst_copy
 
 
 def binary_search_recursive(lst, target):
-    """
-    Zoek een element target in gegeven lijst door middel van recursief binair zoeken.
-    Je mag ervan uit gaan dat de gegeven lijst al gesorteerd is.
-    De inhoud van de gegeven lijst verandert niet.
+    def binary_search_recursive_internal(lst,min,max,target):
+        if min > max: 
+            return False
+        else: 
+            mid = (min + max)//2   #gehele deling
+            if(lst[mid] == target):
+                return True
+            elif(lst[mid] > target):
+                return binary_search_recursive_internal(lst, min,mid-1,target)
+            elif(lst[mid] < target):
+                return binary_search_recursive_internal(lst, mid+1 ,max,target)
+    return binary_search_recursive_internal(lst,0,len(lst)-1, target)
 
-    Args:
-        lst    -- de (reeds gesorteerde) lijst waarin gezocht wordt (list)
-        target -- het element dat gezocht wordt
-
-    Returns:
-        of het element in de lijst voorkomt (bool)
-    """
-    return False
-
-
-"""
-==========================[ HU TESTRAAMWERK ]================================
-Onderstaand staan de tests voor je code -- hieronder mag je niets wijzigen!
-Je kunt je code testen door deze file te runnen of met behulp van pytest.
-"""
 import random
 
 
@@ -197,3 +193,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
